@@ -16,7 +16,7 @@ PS L:\powershell\oo-powershell\OperationsOrchestrationPowershell\OperationsOrche
 ## Login
 
 ```powershell 
-PS L:\powershell\oo-powershell\OperationsOrchestrationPowershell\OperationsOrchestrationPowershell> Connect-OO -base_url https://dev-hpoo.tools.cihs.gov.on.ca:8443/oo/rest
+PS L:\powershell\oo-powershell\OperationsOrchestrationPowershell\OperationsOrchestrationPowershell> Connect-OO -base_url https://dev-hpoo.domain.com:8443/oo/rest
 
 cmdlet Connect-OO at command pipeline position 1
 Supply values for the following parameters:
@@ -24,7 +24,7 @@ credentials
 User: ps_admin
 Password for user ps_admin: *****
 
-Logged Into https://dev-hpoo.tools.cihs.gov.on.ca:8443/oo/rest as ps_admin. OO_URL and OO_TOKEN have been exported to the environment
+Logged Into https://dev-hpoo.domain.com:8443/oo/rest as ps_admin. OO_URL and OO_TOKEN have been exported to the environment
 @{version=10.60 - Enterprise Edition; revision=c0304cf4577137dfd63bcc7edbc7517763fa14aa; build ID=27; build number=27; build job name=10-60-Release}
 PS L:\powershell\oo-powershell\OperationsOrchestrationPowershell\OperationsOrchestrationPowershell>
 ```
