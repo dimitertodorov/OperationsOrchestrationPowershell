@@ -146,3 +146,50 @@ $response_text
     }
 
 }
+
+
+
+function Invoke-OOFlow{
+<#
+.SYNOPSIS 
+Execute OO Flow Synchronously
+
+.DESCRIPTION
+Execute Flow and Wait for Results
+#>
+    [CmdletBinding()]
+    Param (
+        [Parameter(Mandatory=$true, Position=1)]
+        [string]$uuid,
+
+        [Parameter(Mandatory=$true, Position=2)]
+        [string]$run_name,
+
+        [Parameter(Position=3)]
+        $inputs
+    )
+	$flow_payload= New-Object PSObject -Property @{'flowUuid'=$uuid;
+            'runName'=$run_name;
+            'logLevel'='EXTENDED';
+            'inputs'=$inputs}
+	$flow_json = $flow_payload | ConvertTo-Json -Depth 5
+	$flow_id = OO POST /latest/executions $flow_json
+	$status="STARTED"
+	$counter=0
+	If($flow_id){
+		While(($status -ne "COMPLETED") -and ($counter -lt 30)){
+			$execution_summary = OO GET "/latest/executions/$flow_id/summary"
+			$status=$execution_summary.status
+			$counter++
+			If($status -eq "COMPLETED"){
+				Write-Progress -Activity "Executing Flow $flow_id" -Status $status -PercentComplete 100 
+				return $execution_summary
+			}Else{
+				$step_count = OO GET "/latest/executions/$flow_id/steps/count"
+				Write-Progress -Activity "Executing Flow $flow_id" -Status "$status - Steps: $step_count" -PercentComplete -1 
+				Start-Sleep -Seconds 3
+			}
+		}
+	}
+}
+
